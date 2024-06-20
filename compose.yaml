@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        USERNAME: user
+    container_name: test-to-display-python-graph-on-docker-on-wsl2
+    logging:
+      driver: json-file
+      options:
+        max-size: "1m"
+        max-file: "3"
+    volumes:
+      - /mnt/wslg:/mnt/wslg
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - .:/home/user/workspaces
+    environment:
+      - DISPLAY=$DISPLAY
+      - PULSE_SERVER=$PULSE_SERVER
+      - WAYLAND_DISPLAY=$WAYLAND_DISPLAY
+      - XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR
+    stdin_open: true # 標準入力をオープン
+    tty: true # 擬似端末を割り当てる
